@@ -1,0 +1,72 @@
+vec {3}
+layout (location=0) in vec4 in_Position;
+layout (location=1) in vec4 in_UVx2;
+uniform mat4 mvp;
+
+void main() {
+// generate main grids
+// create patches on the grid
+// apply geomorphing
+// capture pivot tables
+// loop from one pivot to another pivot and cycle through terrain shader changes
+// declare pivot tables
+// decide where to place hills
+// elevation calculations for hills
+// (1, 1, 1, w)
+
+// An Implementation of Terrain Geomorphing in the Vertex Shader
+// for Synthetic Planetary Surfaces
+
+// source: Terrain geomorphing in the vertex shader by Daniel Wagner
+
+;-------------------------------------------------------------------------
+; Vertex transformation
+;-------------------------------------------------------------------------
+
+mov r0, v0.xzyy           	; build the base vertex
+mov r0.w, c0.w                ; set w-component to 1.0
+
+dp4 r1.x, v2, c2              ; calc all left and right neighbor tweening
+dp4 r1.y, v3, c3              ; calc all bottom and top neighbor tweening
+
+mad r0.y, v1.y, c0.x, v1.x    ; add factorSelf*yMoveSelf
+add r0.y, r0.y, r1.x          ; add left & right factors
+add r0.y, r0.y, r1.y          ; add bottom & top factors
+
+m4x4 r3, r0, c4           	; matrix transformation
+mov oPos, r3
+
+// combine 9 tessellation levels per frame for every vertex
+tweeningA = (1.0-tweeningL) * tweeningI
+PosFinal = PosBase + tweeningI*dI + tweeningL*dL + tweeningR*dR + tweeningT*dT + //…
+
+Vertex ‘A’ should
+• be inserted/removed in the middle between the positions of Vertex ‘1’ and Vertex ‘2’
+• not pop when the patch switches to another tessellation level
+• not pop when the left neighbor switches to another tessellation level. 
+
+/* Case 'A': The vertex is on an odd x- and even y-position.
+This vertex has to move into the middle position between the next left ('1') and the right ('2') vertices.
+Case 'B': The vertex is on an odd x- and odd y-position.
+This vertex has to move into the middle position between the next top-left ('1') and the bottom-right ('3') vertices.
+Case 'C': The vertex is on an even x- and odd y-position.
+This vertex has to move into the middle position between the next top ('2') and the bottom ('3') vertices.
+*/
+
+// ; Constants specified by the app
+;
+;    c0      = (factorSelf, 0.0f, 0.5f, 1.0f)
+;    c2      = (factorLeft, factorLeft2, factorRight, factorRight2),
+;    c3      = (factorBottom, factorBottom2, factorTop, factorTop2)
+;
+;    c4-c7   = WorldViewProjection Matrix
+;    c8-c11  = Pass 0 Texture Matrix
+;
+;
+; Vertex components (as specified in the vertex DECLARATION)
+;
+;    v0      = (posX, posZ, texX, texY)
+;    v1      = (posY, yMoveSelf, 0.0, 1.0)
+;    v2      = (yMoveLeft, yMoveLeft2, yMoveRight, yMoveRight2)
+;    v3      = (yMoveBottom, yMoveBottom2, yMoveTop, yMoveTop2)
+}

@@ -1,0 +1,22 @@
+This will be an internal dev wiki for the progress of the game.
+
+* TODO for "pre-alpha" version
+** TODO move to doxygen or self-documenting syntax
+** TODO main menu system
+** TODO make at least 90 percent of the code compile
+** TODO movable camera and easy MVPs attached to entities
+** TODO terrain generation algorithm
+** TODO recursive river hydroponics algorithm
+multithreading and recursion/iteration required…
+there are huge advantages to a hydroponic river terrain generation system.
+it creates realistic river junctions and quality terrain biomes.
+Try to see how much of the river logic can be put into coefficient matrices on the GPU
+** TODO GLQuery composability
+GLQueries should be easily extendable and not a hindrance to use.
+The ideal setup: touching gl* functions shouldn't happen outside of the Engine source code!
+** TODO write a shader using ShaderProgram
+** TODO Start test suite
+
+* TODOs that probably won't happen anytime soon
+** Vulkan support
+** Quality graphics
