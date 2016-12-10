@@ -27,7 +27,7 @@ else (USE_SYSTEM_GLEW)
 endif (USE_SYSTEM_GLEW)
 
 if (USE_SYSTEM_GLFW)
-  find_package (GLFW3 REQUIRED)
+  find_package (glfw3 REQUIRED)
   include_directories (${GLFW_INCLUDE_DIRS})
 else (USE_SYSTEM_GLFW)
   add_subdirectory ("glfw")
@@ -36,7 +36,7 @@ else (USE_SYSTEM_GLFW)
 endif (USE_SYSTEM_GLFW)
 
 if (USE_SYSTEM_GLM)
-  find_package (GLM 0.9.0 REQUIRED)
+  find_package (glm 0.9.0 REQUIRED)
   include_directories (${GLM_INCLUDE_DIRS})
 else (USE_SYSTEM_GLM)
   include_directories ("glm")
@@ -56,6 +56,6 @@ endif()
 
 # Create the run game executable
 add_executable(Run main.cpp)
-target_link_libraries(Run glfw3 ${GLEW_LIBRARIES} ${GLFW_LIBRARIES} ${GLM_LIBRARIES})
+target_link_libraries(Run glfw ${GLEW_LIBRARIES} ${GLFW_LIBRARIES} ${GLM_LIBRARIES})
 target_sources(Run PUBLIC ${SOURCES})
 

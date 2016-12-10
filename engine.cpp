@@ -10,9 +10,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 
-Engine::Engine() {};
-
-
 //const Container &InitialConfig;
 void Engine::destroy() { glfwTerminate(); }
 
@@ -30,6 +27,7 @@ int Engine::initialize() {
   glfwSetErrorCallback(glfw_error_callback);
     //exit(1);//EXIT_FAILURE);
 
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
@@ -78,6 +76,7 @@ int Engine::initialize() {
   //                       sizeof(float) * 5, (void *)(sizeof(float) * 2));
 
   Clock eventLoop;
+  eventLoop.previousT = eventLoop.now();
 
   while (!glfwWindowShouldClose(window)) {
      eventLoop.tick();
