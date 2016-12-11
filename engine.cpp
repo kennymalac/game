@@ -13,9 +13,16 @@
 //const Container &InitialConfig;
 void Engine::destroy() { glfwTerminate(); }
 
+
+// TODO: error logger
+static void glCheckErrors() {
+  for(GLenum err; (err = glGetError()) != GL_NO_ERROR;) {
+    // Check for OpenGL error.
+    fprintf('opengl error: %s', std::static_cast<std::string> err);
+  }}
+
 static void glfw_error_callback(int error, const char* description) {
-  fprintf(stderr, "Error: %s\n", description);
-}
+  fprintf(stderr, "Error: %s\n", description);}
 
 int Engine::initialize() {
   if (!glfwInit()) {
@@ -48,8 +55,6 @@ int Engine::initialize() {
     fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
   }
 
-  // replace GLAD with GLEW
-  // gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
   // glfwSwapInterval(1);
   // // NOTE: OpenGL error checks have been omitted for brevity
   // glGenBuffers(1, &vertex_buffer);
@@ -88,18 +93,18 @@ int Engine::initialize() {
   return 0;
 }
 
-  void Engine::configure() {
-    auto openGL4Enabled = GLEW_VERSION_4_0;
+  // void Engine::configure() {
+  //   auto openGL4Enabled = GLEW_VERSION_4_0;
 
-     // Configure opengl version and other internal Engine settings
-    if (openGL4Enabled || GLEW_ARB_tessellation_shader) {
-      // Bootstrap optional terrain tesselation feature
-    }
-    else {
-      // Employ fractal vertex program shaders
-    }
+  //    // Configure opengl version and other internal Engine settings
+  //   if (openGL4Enabled || GLEW_ARB_tessellation_shader) {
+  //     // Bootstrap optional terrain tesselation feature
+  //   }
+  //   else {
+  //     // Employ fractal vertex program shaders
+  //   }
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+  //   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  //   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-  }
+  // }

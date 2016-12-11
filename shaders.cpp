@@ -1,25 +1,29 @@
-Vao ShaderProgram::createVao() {
+#include <experimental/filesystem>
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std::experimental;
+
+
+~GLFragmentShader::GLFragmentShader () {
   
-  //
+  }
+~GLVertexShader::GLFragmentShader () {
+  
 }
 
-std::stack<Vbo> ShaderProgram::createVbo() {
-  // Return vbo stack
-  GLuint vertex_buffer, vertex_shader, fragment_shader;
+
+// Vao ShaderProgram::createVao() {
   
-  }
+//   //
+// }
 
-ShaderProgram::loadInShaderCache() {
-  // We should be able to add shaders to the shader cache at runtime.
-  this->shaders
-  }
+// std::stack<Vbo> ShaderProgram::createVbo() {
+//   // Return vbo stack
+//   GLuint vertex_buffer, vertex_shader, fragment_shader;
+  
+//   }
 
-void ShaderProgram:glCheckErrors() {
-  for(GLenum err; (err = glGetError()) != GL_NO_ERROR;) {
-    // Check for OpenGL error.
-    fprintf('opengl error: %s', std::static_cast<std::string> err);
-  }
-}
 
 void ShaderProgram::glBootstrap() {
    GLuint vboID;
@@ -65,26 +69,47 @@ void ShaderProgram::glBootstrap() {
    // Check for OpenGL error.
 }
 
+void ShaderProgram::compile() {
+  programId = glCreateProgram();
+}
+
 void ShaderProgram::load() {
   // ShaderPrograms require buffers to be generated first
   
 
   // Shader Type is part of an enum of GL_VERTEX_SHADER or GL_FRAGMENT_SHADER
   glCreateShaders(SHADER_TYPE);
-  shaders = assembleShaders();
-  for (auto &s : shaders) {
-    glAttachShader(program, &s);
-  }
 
   glLinkProgram(program);
 }
 
 
-// maybe use include filesystem because reasons
-ShaderProgram::loadFromDisk(std::string location) {
-  ofstream of(location);
-  streambuf* origBuf = cout.rdbuf();
-  cout.rdbuf(of.rdbuf());
-}
+ShaderProgram::loadFromFile(std::string name) {
+  auto location = current_path() / "shaders" / name;
+  if (filesystem::exists(location)) {
+    auto ftype = location.extension();
+    std::ifstream shaderFile(location);
+    std::string buffer((std::istreambuf_iterator<char>(shaderFile)),
+                       (std::istreambuf_iterator<char>()));
 
-// 
+    // Determine the GLShader's type
+    // TODO: sometimes we want multiple shader types in the same file?
+    // NOTE: emplace only returns a reference in C++17
+    if (ftype == ".vtx.glsl") {
+      auto &shader = loadedShaders::emplace<&buffer>(GLVertexShader shader);
+    }
+    else if (ftype == ".frag.glsl") {
+      auto &shader = loadedShaders::emplace<&buffer>(GLFragmentShader shader);
+    }
+    else if (ftype == ".tess.glsl") {
+      // TODO - tesselation shader
+      auto &shader = loadedShaders::emplace<&buffer>(GLShader shader);
+    }
+    else {
+      throw std::domain_error::domain_error(
+        "GLShader must have a type.");
+    }
+
+    // Now attach the shader to this ShaderProgram
+    glAttachShader(programId, &shader->shaderId);
+    }}

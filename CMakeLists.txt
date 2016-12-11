@@ -3,7 +3,7 @@ project(SimulatorGame)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE ON)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
 # Export a JSON file with information about our build for irony-mode
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
@@ -45,6 +45,8 @@ endif (USE_SYSTEM_GLM)
 file(GLOB SOURCES
   "engine.hpp"
   "engine.cpp"
+  # "component.hpp"
+  # "component.cpp"
   #"*.hpp"
   #"*.cpp"
   )

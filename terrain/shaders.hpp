@@ -151,6 +151,8 @@ class TerrainShader : ShaderProgram {
   // bump mapping
   // spectral imaging of terrain layers
 
-  ~TerrainShader();};
+  ~TerrainShader (Grid& g);
+
+  RenderableMesh mesh;};
 
 
