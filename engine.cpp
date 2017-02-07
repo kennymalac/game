@@ -34,18 +34,16 @@ int Engine::initialize() {
   glfwSetErrorCallback(glfw_error_callback);
     //exit(1);//EXIT_FAILURE);
 
+  // Decide profile
+  // try { ... } catch () { .... } 
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-  //transformgmtx4x4
-  //
 
   window = glfwCreateWindow(1024, 768, "Simple example", NULL, NULL);
   if (!window) {
-    glfwTerminate();
-    //exit(0);//EXIT_FAILURE);
-  }
+    glfwTerminate();}
   //glfwSetKeyCallback(window, keyCallback);
   glfwMakeContextCurrent(window);
 
@@ -80,19 +78,41 @@ int Engine::initialize() {
   // glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE,
   //                       sizeof(float) * 5, (void *)(sizeof(float) * 2));
 
-  Clock eventLoop;
+  // Event timezone
+  int et_tz = 100;
+  // Observer timezone
+  int ot_tz = 24;
+  // Render timezone
+  // TODO fps configurable at run-time
+  int fps_tz = 60;
+
+  Stepper eventLoop{std::chrono::seconds, et_tz};
+  Stepper observerLoop{std::chrono::seconds, ot_tz};
+  Stepper renderLoop{std::chrono::seconds, fps_tz};
+
   eventLoop.previousT = eventLoop.now();
 
+  //glViewport(0, 0, width, height);
+  // TODO - single threaded dispatch is slow, improve this
   while (!glfwWindowShouldClose(window)) {
-     eventLoop.tick();
-  }
+    for (auto ets: eventLoop.step()) {
+      for (auto &triggers: ets->findUpdates()) {
+        
+      }};
+    for (auto ots: observerLoop.step()) {
+      for (auto &updates: ots->findUpdates()) {
+        &u->process();
+      }}
+    for (auto fpss: renderLoop.step()) {
+      for (auto &renderable: fpss->findUpdates()) {
+        &r.draw();
+      }}}
 
   glfwDestroyWindow(window);
   glfwTerminate();
   //exit(EXIT_SUCCESS);
   return 0;
 }
-
   // void Engine::configure() {
   //   auto openGL4Enabled = GLEW_VERSION_4_0;
 

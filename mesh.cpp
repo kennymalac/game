@@ -22,6 +22,3 @@ auto RenderableMesh::setupBuffers() {
 
   glBindVertexArray(0);
   return coordBuffers;};
-
-auto RenderableMesh::render() {
-  return ;};

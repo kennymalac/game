@@ -1,5 +1,6 @@
 #pragma once
 
+// updateable, drawable
 class Component {
   using ComponentID = std::size_t;
 
@@ -13,9 +14,7 @@ class Component {
   template <typename T> inline ComponentID getComponentTypeID() noexcept {
     // On first call generate a type ID for this component
     static ComponentID typeID{genUniqueComponentID()};
-     genUniqueComponentID() noexcept {
-      static ComponentID lastID{0u};
-      return lastID++;}
+    return typeID;}
 
   virtual ~Component();
 };

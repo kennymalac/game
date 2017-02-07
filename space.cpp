@@ -8,24 +8,30 @@
 
 //using;
 
+class SpatialPartition {
+  Texture textureMap;
+  SugarDependencyGraph sugars;
+  }
+
 class Grid {
   vector<vector<Cell *>> cells;
   // TODO n-dimensional spatial partitioning (3x3, 4x4 being the main choices)
   Cell *getCell(int x, int y) { return cells[x][y]; }
 
-  Vector2i Grid::getIndex(Vector2i p) {
-    return {p.x / cellWidth, p.y / cellHeight};
+  glm::vec2 Grid::getIndex(glm::vec2 i) {
+    return glm::vec2{p.x / cellWidth, p.y / cellHeight};
   }
+  serialize
 }
 
 struct Observer {
   void contemplate() {
     //Array<SubSpace *>{matrix4x4};
-    for (Update &u : updatedSpaces) {
+    for (Space &u : updatedSpaces) {
       Observer->queryUpdates();
       u->processUpdate();
     }
-    MessageFactory *dispatcherClause;
+    //MessageFactory *dispatcherClause;
     // assert each update passes
     // assert each renderable renders
   }
@@ -90,27 +96,6 @@ class EntityQuery
     }
   }
 
-// drawable, updateable
-struct Component {
-  using ComponentID = std::size_t;
-
-  inline ComponentID genUniqueComponentID() noexcept {
-    static ComponentID lastID{0u};
-    return lastID++;
-  }
-
-  template <typename T> bool hasComponent() const {
-    return componentBitset[getComponentTypeID<T>()];
-  }
-
-  template <typename T> inline ComponentID getComponentTypeID() noexcept {
-    // On first call generate a type ID for this component
-    static ComponentID typeID{genUniqueComponentID()};
-    return typeID;
-  }
-
-}
-
 // // aggregate of entities
 //   class Manager {
 //   public:
@@ -122,52 +107,51 @@ struct Component {
 
 // Initializes Observers and query runners
 struct Scene {
+
   auto render() {
     
   }
 
-  std::vector<std::unique_ptr>> ;
-}
+  TransitionMap tm;
+};
 
 // TODO abstract Scene management… use SceneManager to manage Transition states
 // Notifies the Server on behalf of Scenes
 // All TODOs for frustrum rendering are optimization suggestions
-  struct SceneManager {
-    /*
-      VFC algorithm: Improved frustum-object cull [Villi Miettinen]
-      The below TODOs are optimization suggestions.
-      TODO: Implement axis-aligned bounding boxes
-      Implement Efficient View Frustum Culling [Daniel Skora, Josef Jelinek]
-      Optimized View Frustum Culling Algorithms for Bounding Boxes [Ulf Assarsson, Tomas Moller]
-    */
-    glm::mtx4x4 getViewFrustrum(auto &camera, auto &plane) {
-      EntityQuery q;
-      // Perpendicular to the view frustrum
-      glm::vec3 unitVector; // == 1,1,1
+struct SceneManager {
+  /*
+    VFC algorithm: Improved frustum-object cull [Villi Miettinen]
+    The below TODOs are optimization suggestions.
+    TODO: Implement axis-aligned bounding boxes
+    Implement Efficient View Frustum Culling [Daniel Skora, Josef Jelinek]
+    Optimized View Frustum Culling Algorithms for Bounding Boxes [Ulf Assarsson, Tomas Moller]
+  */
+  glm::mtx4x4 getViewFrustrum(auto &camera, auto &plane) {
+    EntityQuery q;
+    // Perpendicular to the view frustrum
+    glm::vec3 unitVector; // == 1,1,1
 
-      glm::distance;
+    glm::distance;
 
-      auto projectedVector = glm::project<glm::vec3>();
+    auto projectedVector = glm::project<glm::vec3>();
 
-      // basic intersection test
-      // curPos in this case is the location of the camera
-      EntityQuery->findEntitiesWithinRadius(
-        &space
-        camera->position,
-        glm::distance<vec3>(&plane->origin, x));
+    // basic intersection test
+    // curPos in this case is the location of the camera
+    EntityQuery->findEntitiesWithinRadius(
+      &space
+      camera->position,
+      glm::distance<vec3>(&plane->origin, x));
 
-      // TODO: Implement OBB hierarchies
-      // plane coherency test
-      // octant test
-      // masking
+    // TODO: Implement OBB hierarchies
+    // plane coherency test
+    // octant test
+    // masking
 
-      return glm::gtc::matrix_transform::frustum(
-                                                 left,
-                                                 right
-                                                 bottom,
-                                                 top,
-                                                 nearVal,
-                                                 farVal
-);
-    }
+    return glm::gtc::matrix_transform::frustum(
+                                               left,
+                                               right
+                                               bottom,
+                                               top,
+                                               nearVal,
+                                               farVal);}
   }

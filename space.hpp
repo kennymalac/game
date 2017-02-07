@@ -2,7 +2,8 @@
 #include <glm/gtx/transform.hpp>
 //#include 
 
-//struct Scene;
+struct Scene;
+struct TransitionMap;
 class Space {
 public:
   void flushVBOs();
@@ -21,5 +22,13 @@ protected:
     // vector<Observer*> observables;
     // for (auto &obj : observerables)
     //   obj->contemplate();
+  }};
+
+struct Scene {
+  
   }
-};
+
+class SceneManager {
+  Scene getScene(int index);
+  void reset(tm);
+  TransitionMap tm;}

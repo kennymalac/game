@@ -8,7 +8,7 @@ using namespace std::experimental;
 ~GLFragmentShader::GLFragmentShader () {
   
   }
-~GLVertexShader::GLFragmentShader () {
+~GLVertexShader::GLVertexShader () {
   
 }
 
@@ -71,6 +71,7 @@ void ShaderProgram::glBootstrap() {
 
 void ShaderProgram::compile() {
   programId = glCreateProgram();
+  this->glBootstrap();
 }
 
 void ShaderProgram::load() {
@@ -84,7 +85,39 @@ void ShaderProgram::load() {
 }
 
 
-ShaderProgram::loadFromFile(std::string name) {
+template <typename ... Ts> void BindShaders(ShaderProgram* sp, auto& buffer, const Ts& ... args) {
+  int index = 0;
+  (sp->bind(&buffer, ++index, args), ...)
+}
+
+
+void ShaderProgram::bind(auto buffer, auto currShader, auto ftype) {
+  // Determine the GLShader's type
+  // TODO: sometimes we want multiple shader types in the same file?
+  // NOTE: emplace only returns a reference in C++17
+  if (ftype == ".vtx.glsl") {
+    GLVertexShader vtx{};
+    auto &shader = loadedShaders::emplace<&buffer>(vtx);
+  }
+  else if (ftype == ".frag.glsl") {
+    GLFragmentShader frag{};
+    auto &shader = loadedShaders::emplace<&buffer>(frag);
+  }
+  else if (ftype == ".tess.glsl") {
+    // TODO - tesselation shader
+    GLShader shader{};
+    auto &shader = loadedShaders::emplace<&buffer>(shader);
+  }
+  else {
+    throw std::domain_error::domain_error(
+     "GLShader must have a type.");
+  }
+
+  // Now attach the shader to this ShaderProgram
+  glAttachShader(programId, &shader->shaderId);}
+
+std::tuple<auto, auto> ShaderProgram::loadFromFile(std::string name) {
+
   auto location = current_path() / "shaders" / name;
   if (filesystem::exists(location)) {
     auto ftype = location.extension();
@@ -92,24 +125,5 @@ ShaderProgram::loadFromFile(std::string name) {
     std::string buffer((std::istreambuf_iterator<char>(shaderFile)),
                        (std::istreambuf_iterator<char>()));
 
-    // Determine the GLShader's type
-    // TODO: sometimes we want multiple shader types in the same file?
-    // NOTE: emplace only returns a reference in C++17
-    if (ftype == ".vtx.glsl") {
-      auto &shader = loadedShaders::emplace<&buffer>(GLVertexShader shader);
-    }
-    else if (ftype == ".frag.glsl") {
-      auto &shader = loadedShaders::emplace<&buffer>(GLFragmentShader shader);
-    }
-    else if (ftype == ".tess.glsl") {
-      // TODO - tesselation shader
-      auto &shader = loadedShaders::emplace<&buffer>(GLShader shader);
-    }
-    else {
-      throw std::domain_error::domain_error(
-        "GLShader must have a type.");
-    }
 
-    // Now attach the shader to this ShaderProgram
-    glAttachShader(programId, &shader->shaderId);
-    }}
+    return {buffer, ftype};}}

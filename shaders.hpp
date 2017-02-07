@@ -15,11 +15,16 @@
 //   }
 
 struct GLFragment {
-  // "A Frament is a collection of values produced by the Rasterizer" - OpenGL docs
+  // "A Fragment is a collection of values produced by the Rasterizer" - OpenGL docs
   virtual GLuint inputFrag = 0;
   virtual Gluint outputFrag = 0;
   //virtual GLuint fragmentShader = 0;
   };
+
+enum AbstractGLCall {
+  // function type
+  // Work on this later
+};
 
 struct GLFragmentShader : GLShader {
   virtual vector<GLFragment *> fragments = 0;
