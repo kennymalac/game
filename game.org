@@ -1,5 +1,47 @@
 This will be an internal dev wiki for the progress of the game.
 
+* Main TODO
+** Priority 1 (urgent)
+*** Camera module
+**** TODO 
+**** TODO full test coverage
+*** Terrain modules
+**** TODO 
+**** TODO 
+**** TODO full test coverage
+*** Engine clock
+**** TODO multithreaded dispatch
+**** TODO full test coverage
+*** RenderableMesh
+**** TODO 
+**** TODO full test coverage
+*** ShaderProgram
+**** TODO Shader linkage
+**** TODO Shader loadFromFile
+**** TODO ShaderProgram queued GLShader bindage
+**** TODO full test coverage
+
+** Priority 2 (necessary)
+*** Component/Entity
+*** Scene
+*** SceneManager
+*** Texture/Texel
+*** Space
+** Priority 3 (backlog)
+*** EntityQuery
+*** Physics
+*** FrameDatum
+** Priority 4 (enhancements)
+*** Debug panel (imgui)
+*** AbstractGLCall
+*** GLFragmentShader
+*** GLVertexShader
+** Priority 5 (wishlist)
+*** Server
+*** Transitions
+*** GLQuery
+*** Main menu
+
 * TODO for "pre-alpha" version
 ** TODO move to doxygen or self-documenting syntax
 ** TODO main menu system

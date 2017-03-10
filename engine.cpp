@@ -2,6 +2,7 @@
 #include <string>
 #include <stdlib.h>
 #include <stdio.h>
+#include <memory>
 
 #include "engine.hpp"
 #include <glm/glm.hpp>
@@ -18,7 +19,7 @@ void Engine::destroy() { glfwTerminate(); }
 static void glCheckErrors() {
   for(GLenum err; (err = glGetError()) != GL_NO_ERROR;) {
     // Check for OpenGL error.
-    fprintf('opengl error: %s', std::static_cast<std::string> err);
+    fprintf(stdout, "opengl error: %s\n", glewGetErrorString(err));
   }}
 
 static void glfw_error_callback(int error, const char* description) {
@@ -40,8 +41,11 @@ int Engine::initialize() {
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
+  // TODO better settings
+  int width = 1024;
+  int height = 768;
 
-  window = glfwCreateWindow(1024, 768, "Simple example", NULL, NULL);
+  window = glfwCreateWindow(width, height, "Simple example", NULL, NULL);
   if (!window) {
     glfwTerminate();}
   //glfwSetKeyCallback(window, keyCallback);
@@ -78,35 +82,45 @@ int Engine::initialize() {
   // glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE,
   //                       sizeof(float) * 5, (void *)(sizeof(float) * 2));
 
+  glViewport(0, 0, width, height);
+
   // Event timezone
-  int et_tz = 100;
+  int ets = 24;
   // Observer timezone
-  int ot_tz = 24;
+  int ots = 144;
   // Render timezone
   // TODO fps configurable at run-time
-  int fps_tz = 60;
+  int fps = 60;
 
-  Stepper eventLoop{std::chrono::seconds, et_tz};
-  Stepper observerLoop{std::chrono::seconds, ot_tz};
-  Stepper renderLoop{std::chrono::seconds, fps_tz};
+  // Sync our event, observer, and render steppers unto the same clock
+  using precision = std::chrono::microseconds;
+  auto clock = std::make_shared<Clock<precision>>();
+  clock->previousT = clock->now();
 
-  eventLoop.previousT = eventLoop.now();
+  // Now create a stepper for each loop that runs updates a certain number of times per second
+  using SecStepper = Stepper<std::chrono::seconds, precision>;
+  // SecStepper eventLoop{clock, ets};
+  // SecStepper observerLoop{clock, ots};
+  // SecStepper renderLoop{clock, fps};
+  auto eventLoop = SecStepper::create(clock, ets);
+  auto renderLoop = SecStepper::create(clock, fps);
 
-  //glViewport(0, 0, width, height);
   // TODO - single threaded dispatch is slow, improve this
   while (!glfwWindowShouldClose(window)) {
-    for (auto ets: eventLoop.step()) {
-      for (auto &triggers: ets->findUpdates()) {
+    // for (auto ets: eventLoop.step()) {
+    //   for (auto &triggers: ets->findUpdates()) {
         
-      }};
-    for (auto ots: observerLoop.step()) {
-      for (auto &updates: ots->findUpdates()) {
-        &u->process();
-      }}
-    for (auto fpss: renderLoop.step()) {
-      for (auto &renderable: fpss->findUpdates()) {
-        &r.draw();
-      }}}
+    //   }};
+    // for (auto ots: observerLoop.step()) {
+    //   for (auto &updates: ots->findUpdates()) {
+    //     &u->process();
+    //   }}
+    // for (auto fpss: renderLoop.step()) {
+    //   for (auto &renderable: fpss->findUpdates()) {
+    //     &r.draw();}
+
+    clock->tick();
+  }
 
   glfwDestroyWindow(window);
   glfwTerminate();
