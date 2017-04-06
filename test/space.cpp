@@ -12,13 +12,16 @@ GIVEN("a Space is being constructed") {
 
 GIVEN("an Observer is being constructed") {
   WHEN("") {
-    THEN("") {
+    THEN("it must be present in a Space") {
       
     }
   }
+  WHEN("") {
+    
+  }
 }
 
-GIVEN("an Observer") {
+GIVEN("an Observer exists") {
   WHEN("it contemplates") {
     THEN("it finds updates to process") {
       
@@ -32,6 +35,7 @@ GIVEN("an Observer") {
     // space.runCompileChecks();
     THEN("strange behavior leads to runtime error") {
       // TODO
+      
     }
   }
 }
@@ -50,7 +54,7 @@ GIVEN("a constructed Space is being observed") {
       assert entityQ.all().length == 1;
     }
     THEN("they may be queried") {
-      //
+      // 
     }
     THEN("they may be updated") {
       //

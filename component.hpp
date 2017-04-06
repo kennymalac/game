@@ -1,10 +1,10 @@
 #pragma once
 
 // updateable, drawable
-class Component {
+struct Component {
   using ComponentID = std::size_t;
 
-  virtual void update(float ms);
+  virtual void update();
   virtual void draw();
 
   inline ComponentID genUniqueComponentID() noexcept {

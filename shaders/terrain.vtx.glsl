@@ -12,10 +12,10 @@ uniform sampler2D tessellationMap;
 // TODO lighting
 //uniform sampler2D AmbientOcc
 // TODO camera
-//uniform float tween;
+uniform float tween;
 
 attribute vec4 position;
-//attribute vec4 tweened;
+attribute vec4 tweened;
 
 void main() {
   // generate main grids

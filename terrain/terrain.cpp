@@ -5,7 +5,7 @@ void TerrainGenerator::initShaders(auto& g) {
   TerrainShader t{&g};
   // Assign relevant identifiers
   //t.quad = Quad {texture: }
-  t.quadTexture = glGetUniformLocation(programId, "texture");
+  //t.quadTexture = glGetUniformLocation(programId, "texture");
   t.quadWidth = glGetUniformLocation(programId, "width");
   t.quadHeight = glGetUniformLocation(programId, "height");
 }
@@ -29,10 +29,11 @@ TerrainGenerator::createLandscape() {
   // SET PROJECTION
   ortho(0.f,(float)width,(float)height,0.f);
   // SET MODELVIEW
+  
 
   // Setup a mesh to be rendered
-  RenderableMesh mesh;
-  mesh->setupBuffers(sizeof(Texel));
+  RenderableMesh mesh{};
+  mesh.initTextures();
 
   // // Create a normal map
   // glGenTextures(1, &normalmap);
@@ -59,6 +60,8 @@ DiamondSquareHeightmap::~DiamondSquareHeightmap() {
   std::array<double,3> weights {1.0, 0.8, 1.2};
   std::piecewise_linear_distribution<double>
     distribution (intervals.begin(), intervals.end(), weights.begin());
+
+  // TODO make use of distribution
 }
 
 void DiamondSquareHeightmap::generate(n) {

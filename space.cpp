@@ -14,14 +14,14 @@ class SpatialPartition {
   }
 
 class Grid {
-  vector<vector<Cell *>> cells;
+  std::vector<std::vector<Cell *>> cells;
   // TODO n-dimensional spatial partitioning (3x3, 4x4 being the main choices)
   Cell *getCell(int x, int y) { return cells[x][y]; }
 
   glm::vec2 Grid::getIndex(glm::vec2 i) {
-    return glm::vec2{p.x / cellWidth, p.y / cellHeight};
+    return glm::vec2{i.x / cellWidth, i.y / cellHeight};
   }
-  serialize
+  //serialize
 }
 
 struct Observer {
@@ -108,12 +108,22 @@ class EntityQuery
 // Initializes Observers and query runners
 struct Scene {
 
-  auto render() {
+  // auto render() {
     
-  }
+  // }
 
   TransitionMap tm;
+
+  void update(auto ms) {
+    for (auto &e : entities)
+      e->update(ms);
+  }
+  void draw() {
+    for (auto &r : renderables)
+      r->draw();
+  }
 };
+
 
 // TODO abstract Scene management… use SceneManager to manage Transition states
 // Notifies the Server on behalf of Scenes
@@ -126,10 +136,11 @@ struct SceneManager {
     Implement Efficient View Frustum Culling [Daniel Skora, Josef Jelinek]
     Optimized View Frustum Culling Algorithms for Bounding Boxes [Ulf Assarsson, Tomas Moller]
   */
+
+
   glm::mtx4x4 getViewFrustrum(auto &camera, auto &plane) {
     EntityQuery q;
     // Perpendicular to the view frustrum
-    glm::vec3 unitVector; // == 1,1,1
 
     glm::distance;
 
@@ -140,7 +151,7 @@ struct SceneManager {
     EntityQuery->findEntitiesWithinRadius(
       &space
       camera->position,
-      glm::distance<vec3>(&plane->origin, x));
+      glm::distance<glm::vec3>(&plane->origin, x));
 
     // TODO: Implement OBB hierarchies
     // plane coherency test

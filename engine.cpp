@@ -30,8 +30,6 @@ int Engine::initialize() {
     return -1;}
 
   GLFWwindow *window;
-  GLuint vertex_buffer, vertex_shader, fragment_shader, program;
-  GLint mvp_location, vpos_location, vcol_location;
   glfwSetErrorCallback(glfw_error_callback);
     //exit(1);//EXIT_FAILURE);
 
@@ -62,16 +60,10 @@ int Engine::initialize() {
   // glGenBuffers(1, &vertex_buffer);
   // glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
   // glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-  // vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-  // glShaderSource(vertex_shader, 1, &vertex_shader_text, NULL);
-  // glCompileShader(vertex_shader);
+  // vertex_shader = 
   // fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-  // glShaderSource(fragment_shader, 1, &fragment_shader_text, NULL);
-  // glCompileShader(fragment_shader);
   // program = glCreateProgram();
-  // glAttachShader(program, vertex_shader);
-  // glAttachShader(program, fragment_shader);
-  // glLinkProgram(program);
+  // 
   //mvp_location = glGetUniformLocation(program, "MVP");
   //vpos_location = glGetAttribLocation(program, "vPos");
   //vcol_location = glGetAttribLocation(program, "vCol");

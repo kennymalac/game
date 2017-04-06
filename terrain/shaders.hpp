@@ -20,7 +20,7 @@ struct Sugar {
   int amount;
   //size;
   std::size_t type;
-  }
+};
 
 union SugarTypeClass {
   /*
@@ -28,7 +28,11 @@ union SugarTypeClass {
   Harvestable (follows seasons)
   Population (animals and humans)
   */
-}
+};
+
+struct SugarHeatMap {
+  
+};
 
 // The underlying semantic difference between a Sugar and a Resource is that
 // a resource is more feature-complete and features dynamic behavior

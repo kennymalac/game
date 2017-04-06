@@ -1,18 +1,23 @@
 #include <vector>
+#include <map>
 
 // aggregate of components
 class Entity {
 private:
   std::vector<std::unique_ptr<Component>> components;
+  std::ordered_map<ComponentID, Component> components;
 
 public:
-  virtual void update(float ms) {
+  virtual void update(auto time) {
     for (auto &c : components)
-      c->update(ms);
-  }
-  virtual void draw() {
+      c->update(time);}
+
+  template <typename T> inline bool hasComponent() const {
+    return components[getComponentTypeID<T>()];}
+
+  virtual ~Entity() {}};
+
+class DrawableEntity : Entity {
+  inline virtual void draw() {
     for (auto &c : components)
-      c->update(ms);
-  }
-  virtual ~Entity() {}
-}
+      c->draw(time);}};

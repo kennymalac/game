@@ -6,8 +6,6 @@
 
 
 // ShaderFinderIterator = 
-
-
 // class GLQueryFactory(Query) {
 //   forwardIterator = ShaderFinderIterator;
 //   // establish iteration between two loops
@@ -60,7 +58,5 @@ private:
 struct GLShader {
   GLuint shaderId;
   std::string buffer;
-  void compile ();
+  void tryCompile ();
   GLShader(std::string buffer) : buffer (buffer);};
-
-

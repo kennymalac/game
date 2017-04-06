@@ -32,8 +32,8 @@ GIVEN("a ShaderProgram is initialized") {
 
   WHEN("a shader is being binded") {
       shaderProgram.bind(buffer, 0, "")
-    THEN("a shader is appended to the queue of shaders to be processed") {
-      // REQUIRE(queue.length() == 0)
+    TEHN("a shader is appended to the queue of shaders to be processed") {
+      REQUIRE(queue.length() == 0)
       // REQUIRE(queue.length() == 1)
       }}
 

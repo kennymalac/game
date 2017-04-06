@@ -17,7 +17,6 @@ protected:
   auto processShaders();
   auto observeUpdates();
 
-
   virtual ~Space() {
     // vector<Observer*> observables;
     // for (auto &obj : observerables)
@@ -26,9 +25,11 @@ protected:
 
 struct Scene {
   
-  }
+};
 
 class SceneManager {
+  const glm::vec3 unitVector{1,1,1};
+
   Scene getScene(int index);
   void reset(tm);
-  TransitionMap tm;}
+  TransitionMap tm;};

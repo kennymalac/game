@@ -19,8 +19,8 @@ set(ENGINE_TEST_SOURCES
   ${BASE_TEST_DIR}/scene.cpp
   ${BASE_TEST_DIR}/shaders.cpp
   ${BASE_TEST_DIR}/space.cpp
-  ${BASE_TEST_DIR}/sugar.cpp
-  ${BASE_TEST_DIR}/transitions.cpp
+  # ${BASE_TEST_DIR}/sugar.cpp
+  # ${BASE_TEST_DIR}/transitions.cpp
 )
 
 option(USE_SYSTEM_GLEW "Use the GLEW library installed system-wide" ON)
@@ -60,8 +60,16 @@ endif (USE_SYSTEM_GLM)
 file(GLOB SOURCES
   "engine.hpp"
   "engine.cpp"
-  # "component.hpp"
-  # "component.cpp"
+  "camera.hpp"
+  "camera.cpp"
+  "component.hpp"
+  "component.cpp"
+  "entity.hpp"
+  "entity.cpp"
+  "scene.hpp"
+  "scene.cpp"
+  "shaders.cpp"
+  "shaders.hpp"
   #"*.hpp"
   #"*.cpp"
   )

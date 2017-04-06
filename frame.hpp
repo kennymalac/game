@@ -2,26 +2,18 @@ struct FrameDatum {
   // mutable!!!
   std::unordered_map<Texel> renderedTexels;
   //auto timepoint;
-}
-
-struct Pos {
-  glm::vec3 position;
-  glm::vec3 normal;
 };
 
-struct TexelFormat {
-  //
-}
-
-struct Texel {
-  Pos pos;
-  TexelFormat texcoord;}
-
+struct Vertex {
+  glm::vec3 position;
+  glm::vec3 normal;
+  glm::vec2 texcoords;
+};
 
 struct PosMorphFrame {
-  const NUM_VERTS;
+  const numVerticesInModel;
   // TODO figure this out
-  std::array<NUM_VERTS, Pos> verts;
-  PosMorphFrame(NUM_VERTS) : {NUM_VERTS};};
+  std::array<numVertices, Vertex> verts;
+  PosMorphFrame(numVertices) : {numVertices};};
 
 

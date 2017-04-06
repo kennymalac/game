@@ -1,18 +1,22 @@
 #pragma once
+#include <map>
+struct Texture;
 
 class RenderableMesh {
 public:
-  RenderableMesh(vector<Vertex> vertices, vector<Gluint> indices);
+  RenderableMesh(vector<Vertex>& vertices, vector<Gluint>& indices, vector<Texture>& textures);
 
   inline void createCoordBuffer (auto vertexarray, int stride) {
-    glEnableVertexAttribArray(vertexAttribCount);
-    glVertexAttribPointer(vertexAttribCount, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLVoid*)stride);
-    vertexAttribCount++;
-    return vertexAttribCount;}
+    glEnableVertexAttribArray(vertexAttributeCount);
+    glVertexAttribPointer(vertexAttributeCount, GL_FLOAT, GL_FALSE, sizeof(Pos), (GLVoid*)stride);
+    vertexAttributeCount++;
+    return vertexAttributeCount;};
 
   auto setupBuffers;
-  void draw(ShaderProgram& shader);
+  void draw();
 private:
   GLuint VAO, VBO, EBO;
-  auto vertices;
-  int vertexAttribCount;}
+  std::vector<Vector>& vertices;
+  std::vector<unsigned int>& indices;
+  std::vector<Texture>& textures;
+  int vertexAttributeCount;};
